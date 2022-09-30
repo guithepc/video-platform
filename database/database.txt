@@ -1,0 +1,6 @@
+Criação das tabela
+
+-Usuário
+-Perfil
+-Chat
+-Histórico de chat
