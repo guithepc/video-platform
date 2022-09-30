@@ -1,5 +1,6 @@
 package com.fmu.br.videoplatform.controller;
 
+import com.fmu.br.videoplatform.dtos.RecipePdf;
 import com.fmu.br.videoplatform.services.impl.GeneratePdfImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +11,9 @@ public class Controller {
 
 
     @PostMapping(value="/generate-pdf")
-    public ResponseEntity<String> consultAgenda (@RequestBody String frase) throws InterruptedException {
+    public ResponseEntity<String> consultAgenda (@RequestBody RecipePdf data) throws InterruptedException {
         GeneratePdfImpl generator = new GeneratePdfImpl();
-        generator.generate(frase);
+        generator.generate(data);
 
         return ResponseEntity.ok().body("");
     }
