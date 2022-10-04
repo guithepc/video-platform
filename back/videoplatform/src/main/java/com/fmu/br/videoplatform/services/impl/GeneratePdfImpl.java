@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fmu.br.videoplatform.dtos.*;
 import com.fmu.br.videoplatform.services.GeneratePdf;
-import com.lowagie.text.Document;
-import com.lowagie.text.Paragraph;
+import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 import org.springframework.stereotype.Service;
+import com.itextpdf.text.Font.FontFamily;
 
 import javax.swing.*;
 import java.io.FileNotFoundException;
@@ -19,9 +19,11 @@ import java.util.ArrayList;
 
 @Service
 public class GeneratePdfImpl implements GeneratePdf {
+
+    Document doc = new Document();
     @Override
     public void generate(RecipePdf data) {
-        Document doc = new Document();
+
 
         //TODO:
 
@@ -70,14 +72,9 @@ public class GeneratePdfImpl implements GeneratePdf {
 
             System.out.print(json);
 
-            String a = "a";
 
-            Paragraph paragraph = new Paragraph(data.getPageLayout().getPrescription());
-            Paragraph paragraph2 = new Paragraph(data.getPageLayout().getDate());
-
-            doc.add(paragraph);
-            doc.add(paragraph2);
-
+            generateHeader(data);
+            generateBody(data);
 
 
 
@@ -87,5 +84,45 @@ public class GeneratePdfImpl implements GeneratePdf {
             throw new RuntimeException(e);
         }
         doc.close();
+    }
+
+    public void generateHeader(RecipePdf data){
+        Paragraph paragraph = new Paragraph();
+        paragraph.setAlignment(Element.ALIGN_CENTER);
+        paragraph.add(new Chunk(data.getPageLayout().getPrescription(), new Font(Font.BOLD, 24, Font.HELVETICA)));
+        doc.add(paragraph);
+
+        doc.add(new Paragraph(" "));
+
+        Paragraph doctorInfoParagraph = new Paragraph();
+        doctorInfoParagraph.setAlignment(Element.ALIGN_CENTER);
+        doctorInfoParagraph.add(new Chunk(data.getDoctor().getName() + " " + data.getDoctor().getCrm() + " - " + data.getDoctor().getState(), new Font(Font.HELVETICA,
+                14)));
+        doc.add(doctorInfoParagraph);
+
+        doc.add(new Paragraph(" "));
+
+
+    }
+
+    public void generateBody(RecipePdf data){
+        Paragraph name = new Paragraph();
+        name.add(new Chunk("Nome: ", new Font(Font.BOLD, 16, Font.HELVETICA)));
+        name.add(new Chunk(data.getPacient().getName().toUpperCase(), new Font(Font.HELVETICA, 16)));
+
+        Paragraph document = new Paragraph();
+        document.add(new Chunk("CPF: ", new Font(Font.BOLD, 16, Font.HELVETICA)));
+        document.add(new Chunk(data.getPacient().getDocumentNumber(), new Font(Font.HELVETICA, 16)));
+
+        Paragraph date = new Paragraph();
+        date.add(new Chunk("Data e hora: ", new Font(Font.HELVETICA, 16, Font.BOLD)));
+        date.add(new Chunk(data.getPageLayout().getDate(), new Font(Font.HELVETICA, 16)));
+
+
+        doc.add(name);
+//        doc.add(new Paragraph(" "));
+        doc.add(document);
+//        doc.add(new Paragraph(" "));
+        doc.add(date);
     }
 }
