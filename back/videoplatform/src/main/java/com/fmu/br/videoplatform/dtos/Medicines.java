@@ -9,6 +9,6 @@ public class Medicines {
     private String name;
     private String subTitle;
     private String description;
-    private int quantity;
+    private String quantity;
 
 }

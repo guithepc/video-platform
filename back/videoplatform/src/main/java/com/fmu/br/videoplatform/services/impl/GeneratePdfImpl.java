@@ -8,14 +8,12 @@ import com.fmu.br.videoplatform.services.GeneratePdf;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 import org.springframework.stereotype.Service;
-import com.itextpdf.text.Font.FontFamily;
 
-import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Service
 public class GeneratePdfImpl implements GeneratePdf {
@@ -59,12 +57,12 @@ public class GeneratePdfImpl implements GeneratePdf {
 
             recipe.getItemList().get(0).setName("");
             recipe.getItemList().get(0).setDescription("");
-            recipe.getItemList().get(0).setQuantity(1);
+            recipe.getItemList().get(0).setQuantity("");
             recipe.getItemList().get(0).setSubTitle("");
 
             recipe.getItemList().get(1).setName("");
             recipe.getItemList().get(1).setDescription("");
-            recipe.getItemList().get(1).setQuantity(1);
+            recipe.getItemList().get(1).setQuantity("");
             recipe.getItemList().get(1).setSubTitle("");
 
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
@@ -75,6 +73,7 @@ public class GeneratePdfImpl implements GeneratePdf {
 
             generateHeader(data);
             generateBody(data);
+            generateFoot(data);
 
 
 
@@ -102,10 +101,6 @@ public class GeneratePdfImpl implements GeneratePdf {
 
         doc.add(new Paragraph(" "));
 
-
-    }
-
-    public void generateBody(RecipePdf data){
         Paragraph name = new Paragraph();
         name.add(new Chunk("Nome: ", new Font(Font.BOLD, 16, Font.HELVETICA)));
         name.add(new Chunk(data.getPacient().getName().toUpperCase(), new Font(Font.HELVETICA, 16)));
@@ -116,7 +111,11 @@ public class GeneratePdfImpl implements GeneratePdf {
 
         Paragraph date = new Paragraph();
         date.add(new Chunk("Data e hora: ", new Font(Font.HELVETICA, 16, Font.BOLD)));
-        date.add(new Chunk(data.getPageLayout().getDate(), new Font(Font.HELVETICA, 16)));
+
+        SimpleDateFormat formatter= new SimpleDateFormat("dd/MM/yyyy 'às' HH:mm:ss");
+        Date currentDate = new Date(System.currentTimeMillis());
+
+        date.add(new Chunk(formatter.format(currentDate ), new Font(Font.HELVETICA, 16)));
 
 
         doc.add(name);
@@ -124,5 +123,37 @@ public class GeneratePdfImpl implements GeneratePdf {
         doc.add(document);
 //        doc.add(new Paragraph(" "));
         doc.add(date);
+
+        doc.add(new Paragraph(" "));
+    }
+
+    public void generateFoot(RecipePdf data) {
+        Paragraph feet = new Paragraph();
+        Paragraph feet2 = new Paragraph();
+
+        feet.add(new Chunk(data.getClinic().getName(), new Font(Font.BOLD, 12, Font.HELVETICA)));
+        feet2.add(new Chunk(data.getClinic().getAddress(), new Font(Font.HELVETICA, 10)));
+        doc.add(feet);
+        doc.add(feet2);
+
+    }
+    public void generateBody(RecipePdf data){
+
+        for (Medicines med : data.getItemList()) {
+            int i = 1;
+            Paragraph paragraph = new Paragraph();
+            Paragraph paragraph2 = new Paragraph();
+            Paragraph paragraph3 = new Paragraph();
+            paragraph.add(new Chunk(med.getName(), new Font(Font.BOLD, 16, Font.HELVETICA)));
+            i++;
+//            paragraph2.add(new Chunk(med.getSubTitle() + med.getDescription() + String.valueOf(med.getQuantity()), new Font(Font.HELVETICA,10)));
+            paragraph2.add(new Chunk(med.getDescription(), new Font(Font.HELVETICA, 12)));
+            paragraph3.add(new Chunk(med.getQuantity(), new Font( Font.HELVETICA, 10)));
+            doc.add(paragraph);
+            doc.add(paragraph2);
+            doc.add(paragraph3);
+            doc.add(new Paragraph(" "));
+
+        }
     }
 }
