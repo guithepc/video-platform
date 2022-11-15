@@ -70,10 +70,10 @@ public class GeneratePdfImpl implements GeneratePdf {
 
             System.out.print(json);
 
-
+            generateFoot(data);
             generateHeader(data);
             generateBody(data);
-            generateFoot(data);
+
 
 
 
@@ -133,8 +133,11 @@ public class GeneratePdfImpl implements GeneratePdf {
 
         feet.add(new Chunk(data.getClinic().getName(), new Font(Font.BOLD, 12, Font.HELVETICA)));
         feet2.add(new Chunk(data.getClinic().getAddress(), new Font(Font.HELVETICA, 10)));
+        feet.setAlignment(Element.ALIGN_CENTER);
+        feet2.setAlignment(Element.ALIGN_CENTER);
         doc.add(feet);
         doc.add(feet2);
+        doc.add(new Paragraph(" "));
 
     }
     public void generateBody(RecipePdf data){
