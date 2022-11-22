@@ -11,7 +11,7 @@ public class Controller {
 
 
     @PostMapping(value="/generate-pdf")
-    public ResponseEntity<String> consultAgenda (@RequestBody RecipePdf data) throws InterruptedException {
+    public ResponseEntity<String> generatePdf (@RequestBody RecipePdf data) throws InterruptedException {
         GeneratePdfImpl generator = new GeneratePdfImpl();
         generator.generate(data);
 
