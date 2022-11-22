@@ -8,7 +8,6 @@ C:\Users\edyfo\Downloads\EnviodeEmails\EnviodeEmails\obj\Debug\EnviodeEmails.pdb
 D:\EnviodeEmails\EnviodeEmails\bin\Debug\EnviodeEmails.exe.config
 D:\EnviodeEmails\EnviodeEmails\bin\Debug\EnviodeEmails.exe
 D:\EnviodeEmails\EnviodeEmails\bin\Debug\EnviodeEmails.pdb
-D:\EnviodeEmails\EnviodeEmails\obj\Debug\EnviodeEmails.csproj.AssemblyReference.cache
 D:\EnviodeEmails\EnviodeEmails\obj\Debug\EnviodeEmails.csproj.CoreCompileInputs.cache
 D:\EnviodeEmails\EnviodeEmails\obj\Debug\EnviodeEmails.exe
 D:\EnviodeEmails\EnviodeEmails\obj\Debug\EnviodeEmails.pdb
