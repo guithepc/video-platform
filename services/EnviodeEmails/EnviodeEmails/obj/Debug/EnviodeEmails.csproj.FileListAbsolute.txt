@@ -1,0 +1,14 @@
+C:\Users\edyfo\Downloads\EnviodeEmails\EnviodeEmails\bin\Debug\EnviodeEmails.exe.config
+C:\Users\edyfo\Downloads\EnviodeEmails\EnviodeEmails\bin\Debug\EnviodeEmails.exe
+C:\Users\edyfo\Downloads\EnviodeEmails\EnviodeEmails\bin\Debug\EnviodeEmails.pdb
+C:\Users\edyfo\Downloads\EnviodeEmails\EnviodeEmails\obj\Debug\EnviodeEmails.csproj.AssemblyReference.cache
+C:\Users\edyfo\Downloads\EnviodeEmails\EnviodeEmails\obj\Debug\EnviodeEmails.csproj.CoreCompileInputs.cache
+C:\Users\edyfo\Downloads\EnviodeEmails\EnviodeEmails\obj\Debug\EnviodeEmails.exe
+C:\Users\edyfo\Downloads\EnviodeEmails\EnviodeEmails\obj\Debug\EnviodeEmails.pdb
+D:\EnviodeEmails\EnviodeEmails\bin\Debug\EnviodeEmails.exe.config
+D:\EnviodeEmails\EnviodeEmails\bin\Debug\EnviodeEmails.exe
+D:\EnviodeEmails\EnviodeEmails\bin\Debug\EnviodeEmails.pdb
+D:\EnviodeEmails\EnviodeEmails\obj\Debug\EnviodeEmails.csproj.AssemblyReference.cache
+D:\EnviodeEmails\EnviodeEmails\obj\Debug\EnviodeEmails.csproj.CoreCompileInputs.cache
+D:\EnviodeEmails\EnviodeEmails\obj\Debug\EnviodeEmails.exe
+D:\EnviodeEmails\EnviodeEmails\obj\Debug\EnviodeEmails.pdb
