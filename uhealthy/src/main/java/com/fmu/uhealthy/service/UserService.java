@@ -5,10 +5,18 @@ import com.fmu.uhealthy.domain.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import javax.swing.text.html.Option;
+import java.util.List;
+import java.util.Optional;
+
 public interface UserService {
 
-//    User login(String login, String password);
-
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+
+    List<User> findAll();
+
+    Optional<User> findById(Long id);
+
+    User save(User user);
 
 }

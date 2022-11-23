@@ -36,6 +36,9 @@ public class Doctor {
     private LocalDate birthDate;
 
     @ManyToOne
+    private Speciality speciality;
+
+    @ManyToOne
     @JoinColumn(name = "gender_id")
     private Gender gender;
 }

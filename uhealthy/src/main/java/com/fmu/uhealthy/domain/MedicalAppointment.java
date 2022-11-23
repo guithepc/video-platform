@@ -41,4 +41,7 @@ public class MedicalAppointment {
 
     @Column(name = "appointment_date")
     private LocalDate appointmentDate;
+
+    @Transient
+    private Integer statusId;
 }
