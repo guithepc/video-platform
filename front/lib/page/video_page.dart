@@ -18,12 +18,20 @@ class VideoPage extends StatefulWidget {
 class _VideoPageState extends State<VideoPage> {
   late int _remoteUid = 0;
   late RtcEngine _engine;
+  late bool muted = false;
 
   @override
   void initState() {
     super.initState();
     initForAgora();
   }
+
+  /*@override
+  void dispose() {
+    _engine.leaveChannel();
+    _engine.destroy();
+    super.dispose();
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +45,7 @@ class _VideoPageState extends State<VideoPage> {
             Center(
               child: _renderRemoteVideo(),
             ),
+            _toolbar(),
             Align(
               alignment: Alignment.topLeft,
               child: Container(
@@ -82,7 +91,7 @@ class _VideoPageState extends State<VideoPage> {
   }
 
   _renderLocalPreview() {
-    return RtcLocalView.SurfaceView();
+    return const RtcLocalView.SurfaceView();
   }
 
   _renderRemoteVideo() {
@@ -95,5 +104,55 @@ class _VideoPageState extends State<VideoPage> {
       return Text('Por favor espere o usuário remoto logar',
           textAlign: TextAlign.center);
     }
+  }
+
+  _toolbar() {
+    return Container(
+        alignment: Alignment.bottomCenter,
+        padding: const EdgeInsets.symmetric(vertical: 48),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            RawMaterialButton(
+              onPressed: () {
+                setState(() {
+                  muted = !muted;
+                });
+                _engine.muteLocalAudioStream(muted);
+              },
+              child: Icon(muted ? Icons.mic_off : Icons.mic,
+                  color: muted ? Colors.white : Colors.blueAccent, size: 20.0),
+              shape: const CircleBorder(),
+              elevation: 2.0,
+              fillColor: muted ? Colors.blueAccent : Colors.white,
+              padding: const EdgeInsets.all(12.0),
+            ),
+            RawMaterialButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Icon(
+                Icons.call_end,
+                color: Colors.white,
+                size: 35.0,
+              ),
+              shape: const CircleBorder(),
+              elevation: 2.0,
+              fillColor: Colors.redAccent,
+              padding: const EdgeInsets.all(15.0),
+            ),
+            RawMaterialButton(
+                onPressed: () {
+                  _engine.switchCamera();
+                },
+                child: const Icon(
+                  Icons.switch_camera,
+                  color: Colors.blueAccent,
+                  size: 20.0,
+                ),
+                shape: const CircleBorder(),
+                elevation: 2.0,
+                fillColor: Colors.white,
+                padding: const EdgeInsets.all(12.0))
+          ],
+        ));
   }
 }
