@@ -10,4 +10,6 @@ public interface MedicalAppointmentService {
 
     MedicalAppointment save(MedicalAppointment medicalAppointment);
 
+    void getAvailableDatesByDoctorId();
+
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -39,8 +40,11 @@ public class MedicalAppointment {
     @Column(name = "create_date")
     private LocalDate createDate;
 
-    @Column(name = "appointment_date")
-    private LocalDate appointmentDate;
+    @Column(name = "start_appointment_date")
+    private LocalDateTime startAppointmentDate;
+
+    @Column(name = "end_appointment_date")
+    private LocalDateTime endAppointmentDate;
 
     @Transient
     private Integer statusId;
