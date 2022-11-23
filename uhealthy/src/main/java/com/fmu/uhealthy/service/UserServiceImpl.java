@@ -3,17 +3,16 @@ package com.fmu.uhealthy.service;
 import com.fmu.uhealthy.domain.User;
 import com.fmu.uhealthy.dto.UserDTO;
 import com.fmu.uhealthy.repository.UserRepository;
-import org.hibernate.Session;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
-public class UserServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService, UserService {
 
     private final UserRepository repository;
 
@@ -29,5 +28,20 @@ public class UserServiceImpl implements UserDetailsService {
         }
 
         return new UserDTO(user.get());
+    }
+
+    @Override
+    public List<User> findAll(){
+        return repository.findAll();
+    }
+
+    @Override
+    public Optional<User> findById(Long id){
+        return repository.findById(id);
+    }
+
+    @Override
+    public User save(User user){
+        return repository.save(user);
     }
 }

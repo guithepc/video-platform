@@ -6,6 +6,10 @@ import java.util.List;
 
 public interface MedicalAppointmentService {
 
-    List<MedicalAppointment> findAllByUserId(Long userId);
+    List<MedicalAppointment> findAll();
+
+    MedicalAppointment save(MedicalAppointment medicalAppointment);
+
+    void getAvailableDatesByDoctorId();
 
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.time.LocalDate;
 
 @Data
@@ -36,6 +37,15 @@ public class Doctor {
     private LocalDate birthDate;
 
     @ManyToOne
+    private Speciality speciality;
+
+    @ManyToOne
     @JoinColumn(name = "gender_id")
     private Gender gender;
+
+    @Column(name = "start_at")
+    private String startAt;
+
+    @Column(name = "end_at")
+    private String endAt;
 }

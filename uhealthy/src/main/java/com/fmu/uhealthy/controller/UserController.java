@@ -1,53 +1,40 @@
 package com.fmu.uhealthy.controller;
 
 import com.fmu.uhealthy.domain.User;
-import com.fmu.uhealthy.dto.Session;
 import com.fmu.uhealthy.repository.UserRepository;
-import org.springframework.http.HttpStatus;
+import com.fmu.uhealthy.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserRepository repository;
+    private final UserService service;
     private final PasswordEncoder encoder;
 
-    public UserController(UserRepository repository, PasswordEncoder encoder) {
-        this.repository = repository;
+    public UserController(UserService service, PasswordEncoder encoder) {
+        this.service = service;
         this.encoder = encoder;
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> listarTodos() {
-        return ResponseEntity.ok(repository.findAll());
+    public ResponseEntity<List<User>> findAll() {
+        return ResponseEntity.ok(service.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        var user = service.findById(id);
+        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<User> salvar(@RequestBody User usuario) {
-        usuario.setPassword(encoder.encode(usuario.getPassword()));
-        return ResponseEntity.ok(repository.save(usuario));
-    }
-
-    @GetMapping("/validarSenha")
-    public ResponseEntity<Boolean> validarSenha(@RequestParam String login,
-                                                @RequestParam String password) {
-
-        Optional<User> optUsuario = repository.findByLogin(login);
-        if (optUsuario.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
-        }
-
-        User usuario = optUsuario.get();
-        boolean valid = encoder.matches(password, usuario.getPassword());
-
-        HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
-        return ResponseEntity.status(status).body(valid);
+    public ResponseEntity<User> save(@RequestBody User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
+        return ResponseEntity.ok(service.save(user));
     }
 }
