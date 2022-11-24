@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -31,8 +32,8 @@ public class MedicalAppointmentController {
     }
 
     @GetMapping("/available-appointment-date")
-    public ResponseEntity<Map<String, String>> getAvailableDates(){
-        service.getAvailableDatesByDoctorId();;
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Map<LocalDate, List<LocalDateTime>>> getAvailableDates(@RequestParam("doctorId") Long doctorId){
+        return ResponseEntity.ok(service.getAvailableDatesByDoctorId(doctorId));
+//        return ResponseEntity.ok().build();
     }
 }

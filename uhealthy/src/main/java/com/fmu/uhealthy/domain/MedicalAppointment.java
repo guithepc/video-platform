@@ -40,11 +40,8 @@ public class MedicalAppointment {
     @Column(name = "create_date")
     private LocalDate createDate;
 
-    @Column(name = "start_appointment_date")
-    private LocalDateTime startAppointmentDate;
-
-    @Column(name = "end_appointment_date")
-    private LocalDateTime endAppointmentDate;
+    @Column(name = "appointment_date")
+    private LocalDateTime appointmentDate;
 
     @Transient
     private Integer statusId;

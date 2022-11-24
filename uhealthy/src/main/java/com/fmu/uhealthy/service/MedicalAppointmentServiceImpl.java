@@ -12,11 +12,12 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,26 +55,39 @@ public class MedicalAppointmentServiceImpl implements MedicalAppointmentService 
         return repository.save(medicalAppointment);
     }
 
-    public void getAvailableDatesByDoctorId(){
-        var doctor = doctorRepository.getById(1L);
-        var startDate = LocalDate.now();
-        var endDate = startDate.plusMonths(3);
-        var appointmentDates = List.of(LocalDateTime.now().plusHours(1),
-                LocalDateTime.now().plusHours(2), LocalDateTime.now().plusHours(3), LocalDateTime.now().plusHours(4),
-                LocalDateTime.now().plusHours(5));
+    public Map<LocalDate, List<LocalDateTime>> getAvailableDatesByDoctorId(Long doctorId){
+        var doctor = doctorRepository.getById(doctorId);
+        var status = statusRepository.findByCode(SCHEDULED_STATUS).orElseThrow(EntityNotFoundException::new);
+        var startDate = toZeroSeconds(LocalDateTime.now());
+        var endDate = toZeroSeconds(LocalDate.now().plusDays(3).atTime(0, 0));
+        if(startDate.getMinute() > 30)
+            startDate = startDate.plusHours(1).withMinute(0);
+        else
+            startDate = startDate.withMinute(0);
         List<LocalDateTime> dates = new ArrayList<>();
-        Map<String, String> resultMap = new HashMap<>();
-        var previewDate = startDate.atStartOfDay();
-        while (previewDate.toLocalDate().isBefore(endDate)) {
-            LocalDateTime d = previewDate.plusMinutes(30);
-            var actualDate = d.toLocalDate();
-            var doctorStartAt = LocalDateTime.parse(actualDate + "T" + doctor.getStartAt());
-            var doctorEndAt = LocalDateTime.parse(actualDate + "T" + doctor.getEndAt());
-            if(d.isAfter(doctorStartAt) && d.isBefore(doctorEndAt)){
-                dates.add(d);
+        var doctorStart = toZeroSeconds(LocalTime.parse(doctor.getStartAt()));
+        var doctorEnd = toZeroSeconds(LocalTime.parse(doctor.getEndAt()));
+        var date = startDate;
+        while(date.isBefore(endDate)){
+            if(date.toLocalTime().compareTo(doctorStart) >= 0 && date.toLocalTime().compareTo(doctorEnd) <= 0) {
+                dates.add(date);
             }
-            previewDate = d;
+            date = date.plusMinutes(30);
         }
+        var scheduledDates =  repository.findAllByDoctorIdAndStatus_Id(doctorId, status.getId()).stream().map(MedicalAppointment::getAppointmentDate).collect(Collectors.toList());
+        scheduledDates.forEach(scheduledDate -> {
+            scheduledDate = toZeroSeconds(scheduledDate);
+            dates.remove(scheduledDate);
+        });
+        return dates.stream().collect(Collectors.groupingBy(LocalDateTime::toLocalDate, Collectors.toList()));
+    }
+
+    private LocalTime toZeroSeconds(LocalTime time){
+        return time.withSecond(0).withNano(0);
+    }
+
+    private LocalDateTime toZeroSeconds(LocalDateTime dateTime){
+        return dateTime.withSecond(0).withNano(0);
     }
 
 }
