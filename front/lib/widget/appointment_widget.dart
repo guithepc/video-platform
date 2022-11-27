@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:front/page/doctor_detail_page.dart';
+import 'package:intl/intl.dart';
 
 import '../model/medical_appointment.dart';
+
+import 'package:intl/date_symbol_data_local.dart';
 
 class AppointmentWidget extends StatelessWidget {
   const AppointmentWidget({required this.entrie});
@@ -21,7 +24,7 @@ class AppointmentWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${entrie.distance} KM',
+                '25 KM',
                 style: TextStyle(fontSize: 20),
               ),
               Row(
@@ -47,14 +50,14 @@ class AppointmentWidget extends StatelessWidget {
               ),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(
-                  entrie.doctor,
+                  new DateFormat("d/MM/y H:m").format(entrie.appointmentDate),
                   style: TextStyle(color: Colors.blue, fontSize: 18),
                 ),
                 Container(
                   height: 10,
                 ),
                 Text(
-                  entrie.doctorHospital,
+                  entrie.doctor.doctor.crm ?? "",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 15,
@@ -66,7 +69,7 @@ class AppointmentWidget extends StatelessWidget {
           Container(
             height: 10,
           ),
-          Row(children: [Text(entrie.address)]),
+          Row(children: [Text(entrie.doctor.doctor.documentNumber ?? "")]),
           Container(
             height: 20,
           ),

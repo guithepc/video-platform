@@ -8,7 +8,7 @@ import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 
 const appId = "cf96c1d0fddf475a8d0e19c8257f6c12";
 const token =
-    "007eJxTYMgXbf0fOdk+REBoxWrxDR9CXty2ilm7+N9rgd0dZ5bP9lNQYEhOszRLNkwxSEtJSTMxN020SDFINbRMtjAyNU8DShgdiqlNbghkZBB24WRmZIBAEJ+LoSwzJTU/PjkjsYSBAQBNtSH9";
+    "007eJxTYMjRievLzLyoeCdgkpz/rKOuInfnO7/2+TPHWKBOhu0Cj6MCQ3KapVmyYYpBWkpKmom5aaJFikGqoWWyhZGpeRpQwmi/el1yQyAjg0OhLyMjAwSC+FwMZZkpqfnxyRmJJQwMAIIhH7M=";
 
 class VideoPage extends StatefulWidget {
   @override
@@ -16,9 +16,9 @@ class VideoPage extends StatefulWidget {
 }
 
 class _VideoPageState extends State<VideoPage> {
-  late int _remoteUid = 0;
+  int _remoteUid = 0;
   late RtcEngine _engine;
-  late bool muted = false;
+  var muted = false;
 
   @override
   void initState() {
@@ -78,16 +78,17 @@ class _VideoPageState extends State<VideoPage> {
       userOffline: (int uid, UserOfflineReason reason) {
         print('remote user $uid left channel');
         setState(() {
-          //_remoteUid = null;
+          _remoteUid = 0;
         });
       },
     ));
 
-    VideoEncoderConfiguration configuration = VideoEncoderConfiguration();
-    configuration.dimensions = VideoDimensions(width: 1920, height: 1080);
+    /*VideoEncoderConfiguration configuration = VideoEncoderConfiguration();
+    configuration.dimensions = const VideoDimensions(width: 1920, height: 1080);
 
-    await _engine.setVideoEncoderConfiguration(configuration);
+    await _engine.setVideoEncoderConfiguration(configuration);*/
     await _engine.joinChannel(token, 'video_chat', null, 0);
+    await _engine.switchCamera();
   }
 
   _renderLocalPreview() {
@@ -128,7 +129,11 @@ class _VideoPageState extends State<VideoPage> {
               padding: const EdgeInsets.all(12.0),
             ),
             RawMaterialButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                _engine.leaveChannel();
+                _engine.destroy();
+                Navigator.pop(context);
+              },
               child: const Icon(
                 Icons.call_end,
                 color: Colors.white,

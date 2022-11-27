@@ -20,7 +20,7 @@ class NewAppointmentWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${entrie.distance} KM',
+                '25 KM',
                 style: TextStyle(fontSize: 20),
               ),
               Row(
@@ -46,14 +46,14 @@ class NewAppointmentWidget extends StatelessWidget {
               ),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(
-                  entrie.doctor,
+                  entrie.doctor.doctor.name ?? "",
                   style: TextStyle(color: Colors.blue, fontSize: 18),
                 ),
                 Container(
                   height: 10,
                 ),
                 Text(
-                  entrie.doctorHospital,
+                  entrie.doctor.doctor.documentNumber ?? "",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 15,
@@ -65,7 +65,7 @@ class NewAppointmentWidget extends StatelessWidget {
           Container(
             height: 10,
           ),
-          Row(children: [Text(entrie.address)]),
+          Row(children: [Text(entrie.doctor.doctor.crm ?? "")]),
           Container(
             height: 20,
           ),

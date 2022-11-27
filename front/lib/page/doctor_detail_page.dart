@@ -89,15 +89,6 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   ],
                 ),
                 Container(height: 50),
-                Container(
-                  width: double.infinity,
-                  height: 60,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/request_appointment');
-                      },
-                      child: Text('SOLICITAR AGENDAMENTO')),
-                )
               ],
             )));
   }
