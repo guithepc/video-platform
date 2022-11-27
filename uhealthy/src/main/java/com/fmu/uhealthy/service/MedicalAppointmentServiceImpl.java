@@ -1,6 +1,7 @@
 package com.fmu.uhealthy.service;
 
 import com.fmu.uhealthy.domain.MedicalAppointment;
+import com.fmu.uhealthy.dto.constants.UpdateAppointmentDTO;
 import com.fmu.uhealthy.repository.DoctorRepository;
 import com.fmu.uhealthy.repository.MedicalAppointmentRepository;
 import com.fmu.uhealthy.repository.StatusRepository;
@@ -25,6 +26,7 @@ public class MedicalAppointmentServiceImpl implements MedicalAppointmentService 
     private final StatusRepository statusRepository;
     private final DoctorRepository doctorRepository;
     private final String SCHEDULED_STATUS = "scheduled";
+    private final String CANCELED_STATUS = "canceled";
 
     public MedicalAppointmentServiceImpl(MedicalAppointmentRepository repository, UserRepository userRepository, StatusRepository statusRepository, DoctorRepository doctorRepository) {
         this.repository = repository;
@@ -52,6 +54,7 @@ public class MedicalAppointmentServiceImpl implements MedicalAppointmentService 
         return repository.save(medicalAppointment);
     }
 
+    @Override
     public Map<LocalDate, List<LocalDateTime>> getAvailableDatesByDoctorId(Long doctorId){
         var doctor = doctorRepository.getById(doctorId);
         var status = statusRepository.findByCode(SCHEDULED_STATUS).orElseThrow(EntityNotFoundException::new);
@@ -77,6 +80,21 @@ public class MedicalAppointmentServiceImpl implements MedicalAppointmentService 
             dates.remove(scheduledDate);
         });
         return dates.stream().collect(Collectors.groupingBy(LocalDateTime::toLocalDate, Collectors.toList()));
+    }
+
+    @Override
+    public void rescheduleAppointment(Long appointmentId, UpdateAppointmentDTO updateAppointmentDTO){
+        var appointment = repository.getById(appointmentId);
+        appointment.setAppointmentDate(updateAppointmentDTO.getAppointmentDate());
+        repository.save(appointment);
+    }
+
+    @Override
+    public void cancelAppointment(Long appointmentId){
+        var appointment = repository.getById(appointmentId);
+        var status = statusRepository.findByCode(CANCELED_STATUS).orElseThrow(EntityNotFoundException::new);
+        appointment.setStatus(status);
+        repository.save(appointment);
     }
 
     private LocalTime toZeroSeconds(LocalTime time){

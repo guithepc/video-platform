@@ -1,6 +1,7 @@
 package com.fmu.uhealthy.controller;
 
 import com.fmu.uhealthy.domain.MedicalAppointment;
+import com.fmu.uhealthy.dto.constants.UpdateAppointmentDTO;
 import com.fmu.uhealthy.service.MedicalAppointmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,17 @@ public class MedicalAppointmentController {
     @GetMapping("/available-appointment-date")
     public ResponseEntity<Map<LocalDate, List<LocalDateTime>>> getAvailableDates(@RequestParam("doctorId") Long doctorId){
         return ResponseEntity.ok(service.getAvailableDatesByDoctorId(doctorId));
-//        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable("id") Long appointmentId, @RequestBody UpdateAppointmentDTO updateAppointmentDTO){
+        service.rescheduleAppointment(appointmentId, updateAppointmentDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> cancelAppointment(@PathVariable("id") Long appointmentId){
+        service.cancelAppointment(appointmentId);
+        return ResponseEntity.ok().build();
     }
 }
