@@ -5,7 +5,6 @@ import com.fmu.uhealthy.domain.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 

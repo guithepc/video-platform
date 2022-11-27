@@ -1,7 +1,6 @@
 package com.fmu.uhealthy.controller;
 
 import com.fmu.uhealthy.domain.User;
-import com.fmu.uhealthy.repository.UserRepository;
 import com.fmu.uhealthy.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;

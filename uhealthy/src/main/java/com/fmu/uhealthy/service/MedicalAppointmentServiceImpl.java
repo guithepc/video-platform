@@ -1,6 +1,5 @@
 package com.fmu.uhealthy.service;
 
-import com.fmu.uhealthy.domain.Doctor;
 import com.fmu.uhealthy.domain.MedicalAppointment;
 import com.fmu.uhealthy.repository.DoctorRepository;
 import com.fmu.uhealthy.repository.MedicalAppointmentRepository;
@@ -14,10 +13,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
