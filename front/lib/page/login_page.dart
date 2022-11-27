@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:front/page/home_page.dart';
+import 'package:front/service/appointment_service.dart';
+
+import '../service/login_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -59,11 +62,29 @@ class _LoginPageState extends State<LoginPage> {
                 height: 15,
               ),
               ElevatedButton(
-                  onPressed: () {
-                    if (email == 'arthur@email.com' && password == '123') {
+                  onPressed: () async {
+                    var loginResponse =
+                        await LoginService.login(email, password)
+                            .catchError((err) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Error"),
+                              content: Text(err.message),
+                              actions: [
+                                ElevatedButton(
+                                  child: Text("Ok"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                )
+                              ],
+                            );
+                          });
+                    });
+                    if (loginResponse != null) {
                       Navigator.of(context).pushReplacementNamed('/home');
-                    } else {
-                      print('errado');
                     }
                   },
                   child: Text('Entrar'))

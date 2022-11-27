@@ -1,22 +1,27 @@
+import 'package:front/model/patient.dart';
+import 'package:front/model/speciality.dart';
+import 'package:front/model/status.dart';
+import 'package:front/model/user.dart';
+
 class MedicalAppointment {
-  final int meaId;
-  final String doctor;
-  final DateTime dateAppointment;
-  final double costAppointment;
-  final String doctorSpecialty;
-  final String appointmentObservations;
-  final double distance;
-  final String address;
-  final String doctorHospital;
+  final int id;
+  final User patient;
+  final User doctor;
+  final Status status;
+  final Speciality speciality;
+  final String observation;
+  final DateTime createDate;
+  final DateTime appointmentDate;
+  final int statusId;
 
   MedicalAppointment(
-      this.meaId,
+      this.id,
+      this.patient,
       this.doctor,
-      this.dateAppointment,
-      this.costAppointment,
-      this.doctorSpecialty,
-      this.appointmentObservations,
-      this.distance,
-      this.address,
-      this.doctorHospital);
+      this.status,
+      this.speciality,
+      this.observation,
+      this.createDate,
+      this.appointmentDate,
+      this.statusId);
 }

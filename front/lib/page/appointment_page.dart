@@ -14,7 +14,6 @@ class AppointmentPage extends StatefulWidget {
 
 class _AppointmentPageState extends State<AppointmentPage> {
   TextEditingController controller = TextEditingController();
-  List<Speciality> appointments = allSpeciality;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +76,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 ],
               ),
               Container(height: 25),
-              Expanded(
+              /*Expanded(
                   child: ListView.builder(
                 itemCount: appointments.length,
                 itemBuilder: (context, index) {
@@ -107,14 +106,14 @@ class _AppointmentPageState extends State<AppointmentPage> {
                     ),
                   );
                 },
-              ))
+              ))*/
             ],
           ),
         ));
   }
 
   void searchAppointment(String query) {
-    print(query);
+    /*print(query);
     final suggestion = allSpeciality.where((element) {
       final appointment = element.speciality.toLowerCase();
       final input = query.toLowerCase();
@@ -124,5 +123,6 @@ class _AppointmentPageState extends State<AppointmentPage> {
     print(suggestion);
 
     setState(() => appointments = suggestion);
+  */
   }
 }
