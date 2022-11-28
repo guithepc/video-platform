@@ -53,6 +53,10 @@ public class Doctor {
     @OneToOne(mappedBy = "doctor", fetch = FetchType.LAZY)
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "clinic_id")
+    private Clinic clinic;
+
     @Transient
     private String profileImage;
 

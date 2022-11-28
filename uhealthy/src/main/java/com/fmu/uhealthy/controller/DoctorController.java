@@ -1,9 +1,7 @@
 package com.fmu.uhealthy.controller;
 
 import com.fmu.uhealthy.domain.Doctor;
-import com.fmu.uhealthy.domain.Speciality;
 import com.fmu.uhealthy.service.DoctorService;
-import com.fmu.uhealthy.service.SpecialityService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +18,12 @@ public class DoctorController {
 
     public DoctorController(DoctorService service) {
         this.service = service;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Doctor> findAll(@PathVariable("id") Long id){
+        var optionalDoctor = service.findDoctorById(id);
+        return optionalDoctor.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/speciality/{id}")

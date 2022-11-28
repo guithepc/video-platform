@@ -5,6 +5,7 @@ import com.fmu.uhealthy.repository.DoctorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
@@ -15,6 +16,12 @@ public class DoctorServiceImpl implements DoctorService {
         this.repository = repository;
     }
 
+    @Override
+    public Optional<Doctor> findDoctorById(Long id){
+        return repository.findById(id);
+    }
+
+    @Override
     public List<Doctor> findAllDoctorBySpecialityId(Integer specialityId){
         return repository.findAllBySpeciality_Id(specialityId);
     }
