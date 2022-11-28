@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 import '../model/doctor.dart';
 
@@ -16,6 +14,9 @@ class RequestAppointmentPage extends StatefulWidget {
 class _RequestAppointmentPageState extends State<RequestAppointmentPage> {
   final Doctor entrie;
   _RequestAppointmentPageState(this.entrie);
+  TextEditingController controller = TextEditingController();
+  List<DateTime> selectableDays = List.of([DateTime.parse("2022-11-30"),DateTime.parse("2022-12-01"),DateTime.parse("2022-12-05"),DateTime.parse("2022-12-31"),]);
+  String appointmentDate = DateTime.now().toString();
 
   @override
   Widget build(BuildContext context) {
@@ -38,25 +39,25 @@ class _RequestAppointmentPageState extends State<RequestAppointmentPage> {
                   children: [
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.warning_rounded,
                           color: Colors.indigo,
                         ),
                         Container(width: 10),
-                        Text(
+                        const Text(
                           'FIQUE DE OLHO NO CELULAR',
                           style: TextStyle(fontSize: 20, color: Colors.indigo),
                         )
                       ],
                     ),
                     Container(height: 20),
-                    Text(
+                    const Text(
                         'A clínica pode entrar em contato par asugerir outros horários ou passar orientações.')
                   ],
                 ),
               ),
               Container(height: 40),
-              Text(
+              const Text(
                 'Sua solicitação será para atendimento Teleconsulta',
                 style: TextStyle(fontSize: 20),
               ),
@@ -106,10 +107,29 @@ class _RequestAppointmentPageState extends State<RequestAppointmentPage> {
               const Text('Selecione o dia que deseje agendar:',
                   style: TextStyle(fontSize: 20)),
               Container(height: 20),
-              TableCalendar(
-                firstDay: DateTime.now(),
-                lastDay: DateTime.utc(2022, 12, 30),
-                focusedDay: DateTime.now(),
+              TextField(
+                autofocus: false,
+                readOnly: true,
+                controller: controller,
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.calendar_month),
+                  labelText: 'Data do Agendamento',
+                ),
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: selectableDays[0],
+                      firstDate: DateTime(2021),
+                      lastDate: DateTime(2023),
+                      selectableDayPredicate: (DateTime val) =>
+                      selectableDays.contains(val) ? true : false,
+                  );
+                  if(pickedDate != null){
+                    setState(() {
+                      controller.text = pickedDate.toString();
+                    });
+                  }
+                }
               ),
               Container(
                   width: double.infinity,
