@@ -1,12 +1,10 @@
 package com.fmu.uhealthy.service;
 
 import com.fmu.uhealthy.domain.MedicalAppointment;
+import com.fmu.uhealthy.dto.AvailableDatesDTO;
 import com.fmu.uhealthy.dto.constants.UpdateAppointmentDTO;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 public interface MedicalAppointmentService {
 
@@ -14,7 +12,7 @@ public interface MedicalAppointmentService {
 
     MedicalAppointment save(MedicalAppointment medicalAppointment);
 
-    Map<LocalDate, List<LocalDateTime>> getAvailableDatesByDoctorId(Long doctorId);
+    List<AvailableDatesDTO> getAvailableDatesByDoctorId(Long doctorId);
 
     void rescheduleAppointment(Long appointmentId, UpdateAppointmentDTO updateAppointmentDTO);
 

@@ -1,15 +1,13 @@
 package com.fmu.uhealthy.controller;
 
 import com.fmu.uhealthy.domain.MedicalAppointment;
+import com.fmu.uhealthy.dto.AvailableDatesDTO;
 import com.fmu.uhealthy.dto.constants.UpdateAppointmentDTO;
 import com.fmu.uhealthy.service.MedicalAppointmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/medical-appointment")
@@ -33,7 +31,7 @@ public class MedicalAppointmentController {
     }
 
     @GetMapping("/available-appointment-date")
-    public ResponseEntity<Map<LocalDate, List<LocalDateTime>>> getAvailableDates(@RequestParam("doctorId") Long doctorId){
+    public ResponseEntity<List<AvailableDatesDTO>> getAvailableDates(@RequestParam("doctorId") Long doctorId){
         return ResponseEntity.ok(service.getAvailableDatesByDoctorId(doctorId));
     }
 

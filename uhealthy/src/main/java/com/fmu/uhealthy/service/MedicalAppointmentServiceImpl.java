@@ -1,6 +1,7 @@
 package com.fmu.uhealthy.service;
 
 import com.fmu.uhealthy.domain.MedicalAppointment;
+import com.fmu.uhealthy.dto.AvailableDatesDTO;
 import com.fmu.uhealthy.dto.constants.UpdateAppointmentDTO;
 import com.fmu.uhealthy.repository.DoctorRepository;
 import com.fmu.uhealthy.repository.MedicalAppointmentRepository;
@@ -15,7 +16,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,7 +55,7 @@ public class MedicalAppointmentServiceImpl implements MedicalAppointmentService 
     }
 
     @Override
-    public Map<LocalDate, List<LocalDateTime>> getAvailableDatesByDoctorId(Long doctorId){
+    public List<AvailableDatesDTO> getAvailableDatesByDoctorId(Long doctorId){
         var doctor = doctorRepository.getById(doctorId);
         var status = statusRepository.findByCode(SCHEDULED_STATUS).orElseThrow(EntityNotFoundException::new);
         var startDate = toZeroSeconds(LocalDateTime.now());
@@ -79,7 +79,10 @@ public class MedicalAppointmentServiceImpl implements MedicalAppointmentService 
             scheduledDate = toZeroSeconds(scheduledDate);
             dates.remove(scheduledDate);
         });
-        return dates.stream().collect(Collectors.groupingBy(LocalDateTime::toLocalDate, Collectors.toList()));
+        var dateMap = dates.stream().collect(Collectors.groupingBy(LocalDateTime::toLocalDate, Collectors.toList()));
+        return dateMap.keySet().stream()
+                .map(key -> AvailableDatesDTO.builder().date(key).hours(dateMap.get(key).stream().map(
+                        LocalDateTime::toLocalTime).collect(Collectors.toList())).build()).collect(Collectors.toList());
     }
 
     @Override
