@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:front/model/speciality.dart';
 import 'package:front/page/network_page.dart';
 
+import '../service/speciality_service.dart';
+
 class AppointmentPage extends StatefulWidget {
   const AppointmentPage({Key? key}) : super(key: key);
 
@@ -14,6 +16,8 @@ class AppointmentPage extends StatefulWidget {
 
 class _AppointmentPageState extends State<AppointmentPage> {
   TextEditingController controller = TextEditingController();
+  late List<Speciality> allSpecialitys = <Speciality>[];
+  late List<Speciality> specialitys = <Speciality>[];
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +62,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 )
               ]),
               Container(height: 10),
-              Row(
+              /*Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
@@ -74,55 +78,64 @@ class _AppointmentPageState extends State<AppointmentPage> {
                     ),
                   ),
                 ],
-              ),
+              ),*/
               Container(height: 25),
-              /*Expanded(
-                  child: ListView.builder(
-                itemCount: appointments.length,
-                itemBuilder: (context, index) {
-                  final appointment = appointments[index];
+              FutureBuilder<List<Speciality>>(
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<Speciality>> snapshot) {
+                    if (!snapshot.hasData) {
+                      return Container();
+                    } else {
+                      allSpecialitys = snapshot.data!;
+                      specialitys = allSpecialitys;
+                      return Expanded(
+                          child: ListView.builder(
+                        itemCount: specialitys.length,
+                        itemBuilder: (context, index) {
+                          final speciality = specialitys[index];
 
-                  return ListTile(
-                    title: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => NetworkPage(
-                                speciality: appointments[index].speciality),
-                          ),
-                        );
-                      },
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.white)),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          appointment.speciality,
-                          style: const TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ))*/
+                          return ListTile(
+                            title: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => NetworkPage(
+                                        speciality: specialitys[index]),
+                                  ),
+                                );
+                              },
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.white)),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  speciality.name,
+                                  style: const TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ));
+                    }
+                  },
+                  future: SpecialityService.findAllSpeciality())
+              /**/
             ],
           ),
         ));
   }
 
   void searchAppointment(String query) {
-    /*print(query);
-    final suggestion = allSpeciality.where((element) {
-      final appointment = element.speciality.toLowerCase();
+    final suggestion = specialitys.where((element) {
+      final speciality = element.name.toLowerCase();
       final input = query.toLowerCase();
 
-      return appointment.contains(input);
+      return speciality.contains(input);
     }).toList();
-    print(suggestion);
 
-    setState(() => appointments = suggestion);
-  */
+    setState(() => specialitys = suggestion);
   }
 }

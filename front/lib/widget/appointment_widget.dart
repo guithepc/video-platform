@@ -16,7 +16,6 @@ class AppointmentWidget extends StatelessWidget {
     return Container(
       color: Colors.white,
       width: double.infinity,
-      height: 230,
       padding: const EdgeInsets.all(10.0),
       child: Column(
         children: [
@@ -24,7 +23,7 @@ class AppointmentWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '25 KM',
+                new DateFormat("d/MM/y H:m").format(entrie.appointmentDate),
                 style: TextStyle(fontSize: 20),
               ),
               Row(
@@ -50,14 +49,14 @@ class AppointmentWidget extends StatelessWidget {
               ),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(
-                  new DateFormat("d/MM/y H:m").format(entrie.appointmentDate),
+                  entrie.doctor.name ?? "",
                   style: TextStyle(color: Colors.blue, fontSize: 18),
                 ),
                 Container(
                   height: 10,
                 ),
                 Text(
-                  entrie.doctor.doctor.crm ?? "",
+                  entrie.doctor.speciality?.name ?? "",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 15,
@@ -69,7 +68,7 @@ class AppointmentWidget extends StatelessWidget {
           Container(
             height: 10,
           ),
-          Row(children: [Text(entrie.doctor.doctor.documentNumber ?? "")]),
+          Row(children: [Flexible(child: Text(entrie.observation ?? "-"))]),
           Container(
             height: 20,
           ),
@@ -88,10 +87,12 @@ class AppointmentWidget extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DoctorDetailPage(),
-                      ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          DoctorDetailPage(appointment: entrie),
+                    ),
+                  );
                 },
                 child: Text(
                   'VER DETALHES',

@@ -26,18 +26,7 @@ class HomePageState extends State<HomePage> {
             Navigator.of(context).pushNamed('/appointment');
           },
         ),
-        body: /*FutureBuilder<List<MedicalAppointment>>(
-          builder: (BuildContext context,
-              AsyncSnapshot<List<MedicalAppointment>> snapshot) {
-            if (!snapshot.hasData) {
-              return Text('Test');
-            } else {
-              return Text('Retornou dado');
-            }
-          },
-          future: AppointmentService.findAllByUserId(),
-        )*/
-            Container(
+        body: Container(
           color: const Color.fromRGBO(224, 215, 215, 0.2),
           width: double.infinity,
           height: double.infinity,
@@ -62,7 +51,7 @@ class HomePageState extends State<HomePage> {
               builder: (BuildContext context,
                   AsyncSnapshot<List<MedicalAppointment>> snapshot) {
                 if (!snapshot.hasData) {
-                  return Text('Test');
+                  return Container();
                 } else {
                   entries = snapshot.data!;
                   return Expanded(

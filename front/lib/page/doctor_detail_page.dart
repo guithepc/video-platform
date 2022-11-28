@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:front/model/medical_appointment.dart';
 import 'package:front/page/appointment_page.dart';
 
 class DoctorDetailPage extends StatefulWidget {
-  const DoctorDetailPage({Key? key}) : super(key: key);
+  const DoctorDetailPage({required this.appointment});
+
+  final MedicalAppointment appointment;
 
   @override
-  State<DoctorDetailPage> createState() => _DoctorDetailPageState();
+  State<DoctorDetailPage> createState() => _DoctorDetailPageState(appointment);
 }
 
 class _DoctorDetailPageState extends State<DoctorDetailPage> {
+  final MedicalAppointment appointment;
+  _DoctorDetailPageState(this.appointment);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +32,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 Container(
                   height: 20,
                 ),
-                Row(
+                /*Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(onPressed: () {}, child: Icon(Icons.share)),
@@ -36,7 +42,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                     ElevatedButton(
                         onPressed: () {}, child: Icon(Icons.favorite))
                   ],
-                ),
+                ),*/
                 Container(height: 10),
                 Row(
                   children: [
@@ -53,16 +59,12 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Leonardo Liporone Baruki',
+                          appointment.doctor.name ?? "",
                           style: TextStyle(color: Colors.indigo, fontSize: 20),
                         ),
                         Container(height: 2),
-                        Text(
-                          'Luiz Abdala Baruki',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
                         Container(height: 5),
-                        Text('CRM/SP.97266'),
+                        Text('CRM/SP.${appointment.doctor.crm ?? ""}'),
                         Text('Razão Social: CLIN BARUKI SC LTDA'),
                         Container(height: 30),
                         Text('Rua Leoncio De Carvalho, 306')

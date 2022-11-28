@@ -9,6 +9,8 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../model/doctor.dart';
+import '../model/patient.dart';
 import '../model/status.dart';
 
 class AppointmentService {
@@ -30,14 +32,14 @@ class AppointmentService {
     });
 
     if (response.statusCode == 200) {
-      var parsed = json.decode(response.body);
+      var parsed = jsonDecode(utf8.decode(response.bodyBytes));
       List<dynamic> appointments = parsed;
 
       appointments.forEach((appointment) {
         listAppointment.add(MedicalAppointment(
             appointment['id'],
-            User.convertUser(appointment['patient']),
-            User.convertUser(appointment['doctor']),
+            Patient.convertPatient(appointment['patient']),
+            Doctor.convertDoctor(appointment['doctor']),
             Status.convertStatus(appointment['status']),
             Speciality.convertSpeciality(appointment['speciality']),
             appointment['observation'] ?? "",
@@ -47,7 +49,7 @@ class AppointmentService {
       });
       return listAppointment;
     } else {
-      throw Exception('Failed to login');
+      throw Exception('Failed to get medical appointments');
     }
   }
 }

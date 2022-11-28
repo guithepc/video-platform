@@ -1,14 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:table_calendar/table_calendar.dart';
+
+import '../model/doctor.dart';
 
 class RequestAppointmentPage extends StatefulWidget {
-  const RequestAppointmentPage({Key? key}) : super(key: key);
+  const RequestAppointmentPage({required this.entrie});
+  final Doctor entrie;
 
   @override
-  State<StatefulWidget> createState() => _RequestAppointmentPageState();
+  State<StatefulWidget> createState() => _RequestAppointmentPageState(entrie);
 }
 
 class _RequestAppointmentPageState extends State<RequestAppointmentPage> {
+  final Doctor entrie;
+  _RequestAppointmentPageState(this.entrie);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +29,7 @@ class _RequestAppointmentPageState extends State<RequestAppointmentPage> {
           color: const Color.fromRGBO(224, 215, 215, 0.2),
           width: double.infinity,
           height: double.infinity,
-          child: Column(
+          child: ListView(
             children: [
               Container(
                 padding: const EdgeInsets.all(20),
@@ -71,7 +79,7 @@ class _RequestAppointmentPageState extends State<RequestAppointmentPage> {
                     Row(
                       children: [
                         Column(
-                          children: [
+                          children: const [
                             Text('Seg'),
                             Text('Ter'),
                             Text('Qua'),
@@ -79,20 +87,35 @@ class _RequestAppointmentPageState extends State<RequestAppointmentPage> {
                             Text('Sex'),
                           ],
                         ),
+                        Container(width: 20),
                         Column(
                           children: [
-                            Text('14:30 - 17:00'),
-                            Text('12:10 - 18:00'),
-                            Text('10:00 - 16:00'),
-                            Text('08:00 - 13:00'),
-                            Text('07:00 - 12:00'),
+                            Text('${entrie.startAt} - ${entrie.endAt}'),
+                            Text('${entrie.startAt} - ${entrie.endAt}'),
+                            Text('${entrie.startAt} - ${entrie.endAt}'),
+                            Text('${entrie.startAt} - ${entrie.endAt}'),
+                            Text('${entrie.startAt} - ${entrie.endAt}'),
                           ],
                         )
                       ],
                     )
                   ],
                 ),
-              )
+              ),
+              Container(height: 20),
+              const Text('Selecione o dia que deseje agendar:',
+                  style: TextStyle(fontSize: 20)),
+              Container(height: 20),
+              TableCalendar(
+                firstDay: DateTime.now(),
+                lastDay: DateTime.utc(2022, 12, 30),
+                focusedDay: DateTime.now(),
+              ),
+              Container(
+                  width: double.infinity,
+                  height: 40,
+                  child: ElevatedButton(
+                      onPressed: () {}, child: Text('CONTINUAR')))
             ],
           ),
         ));

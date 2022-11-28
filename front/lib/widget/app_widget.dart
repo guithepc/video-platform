@@ -25,7 +25,6 @@ class AppWidget extends StatelessWidget {
               '/': (context) => LoginPage(),
               '/home': (context) => HomePage(),
               '/appointment': (context) => AppointmentPage(),
-              '/request_appointment': (context) => RequestAppointmentPage(),
               '/video_call': (context) => VideoPage()
             },
           );
