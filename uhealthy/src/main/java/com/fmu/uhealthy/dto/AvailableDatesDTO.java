@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -16,5 +16,5 @@ import java.util.List;
 public class AvailableDatesDTO {
 
     private LocalDate date;
-    private List<LocalTime> hours;
+    private List<LocalDateTime> hours;
 }

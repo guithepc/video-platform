@@ -81,8 +81,7 @@ public class MedicalAppointmentServiceImpl implements MedicalAppointmentService 
         });
         var dateMap = dates.stream().collect(Collectors.groupingBy(LocalDateTime::toLocalDate, Collectors.toList()));
         return dateMap.keySet().stream()
-                .map(key -> AvailableDatesDTO.builder().date(key).hours(dateMap.get(key).stream().map(
-                        LocalDateTime::toLocalTime).collect(Collectors.toList())).build()).collect(Collectors.toList());
+                .map(key -> AvailableDatesDTO.builder().date(key).hours(dateMap.get(key)).build()).collect(Collectors.toList());
     }
 
     @Override
