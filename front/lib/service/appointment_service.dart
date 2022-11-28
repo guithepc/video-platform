@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../config/config.dart';
 import '../model/doctor.dart';
 import '../model/patient.dart';
 import '../model/status.dart';
@@ -19,7 +20,7 @@ class AppointmentService {
     List<MedicalAppointment> listAppointment = <MedicalAppointment>[];
 
     var token = await storage.read(key: 'jwt');
-    var url = "http://192.168.0.101:8080/medical-appointment/user";
+    var url = "${environment["baseUrl"]}/medical-appointment/user";
     var header = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',

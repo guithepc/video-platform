@@ -4,11 +4,13 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../config/config.dart';
+
 class LoginService {
   static Future<http.Response?> login(String user, String password) async {
-    final storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
 
-    var url = "http://192.168.0.101:8080/login";
+    var url = "${environment["baseUrl"]}/login";
 
     var header = {"Content-Type": "application/json"};
 

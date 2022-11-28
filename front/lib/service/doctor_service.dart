@@ -4,17 +4,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:front/model/doctor.dart';
 import 'package:http/http.dart' as http;
 
+import '../config/config.dart';
+
 class DoctorService {
   static Future<List<Doctor>> findDoctorBySpeciality(int id) async {
     const storage = FlutterSecureStorage();
     List<Doctor> listDoctor = <Doctor>[];
 
     var token = await storage.read(key: 'jwt');
-    var url = "http://192.168.0.101:8080/doctor/speciality/${id}";
-    var header = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
+    var url = "${environment["baseUrl"]}/doctor/speciality/${id}";
 
     var response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
