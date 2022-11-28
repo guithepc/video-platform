@@ -3,11 +3,13 @@ package com.fmu.uhealthy.service;
 import com.fmu.uhealthy.domain.User;
 import com.fmu.uhealthy.dto.UserDTO;
 import com.fmu.uhealthy.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +43,20 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
+    public void editProfileImage(Long id, String encodedString){
+        var user = repository.getById(id);
+        user.setProfileImage(encodedString);
+        repository.save(user);
+    }
+
+    @Override
     public User save(User user){
         return repository.save(user);
+    }
+
+    @Override
+    public User getCurrentUser(){
+        var login = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        return repository.findByLogin(login).orElseThrow(EntityNotFoundException::new);
     }
 }

@@ -2,10 +2,15 @@ package com.fmu.uhealthy.controller;
 
 import com.fmu.uhealthy.domain.User;
 import com.fmu.uhealthy.service.UserService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -31,9 +36,23 @@ public class UserController {
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/current")
+    public ResponseEntity<User> getCurrentUser() {
+        var user = service.getCurrentUser();
+        return ResponseEntity.ok(user);
+    }
+
     @PostMapping
     public ResponseEntity<User> save(@RequestBody User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         return ResponseEntity.ok(service.save(user));
+    }
+
+    @PutMapping("/profileImage/{id}")
+    public ResponseEntity<Void> updateProfileImage(@PathVariable Long id, @RequestParam("image") MultipartFile file) throws IOException {
+        byte[] fileContent = file.getBytes();
+        String encodedString = Base64.getEncoder().encodeToString(fileContent);
+        service.editProfileImage(id, encodedString);
+        return ResponseEntity.ok().build();
     }
 }
