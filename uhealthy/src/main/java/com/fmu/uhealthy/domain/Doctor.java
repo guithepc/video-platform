@@ -1,6 +1,7 @@
 
 package com.fmu.uhealthy.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -47,4 +48,20 @@ public class Doctor {
 
     @Column(name = "end_at")
     private String endAt;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "doctor", fetch = FetchType.LAZY)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "clinic_id")
+    private Clinic clinic;
+
+    @Transient
+    private String profileImage;
+
+    @SuppressWarnings("unused")
+    public String getProfileImage() {
+        return user.getProfileImage();
+    }
 }

@@ -1,6 +1,7 @@
 
 package com.fmu.uhealthy.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,4 +34,16 @@ public class Patient {
     @ManyToOne
     @JoinColumn(name = "gender_id")
     private Gender gender;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "doctor", fetch = FetchType.LAZY)
+    private User user;
+
+    @Transient
+    private String profileImage;
+
+    @SuppressWarnings("unused")
+    public String getProfileImage() {
+        return user.getProfileImage();
+    }
 }

@@ -18,4 +18,8 @@ public interface UserService {
 
     User save(User user);
 
+    void editProfileImage(Long id, String encodedString);
+
+    User getCurrentUser();
+
 }
