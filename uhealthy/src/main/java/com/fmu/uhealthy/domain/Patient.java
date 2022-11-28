@@ -36,7 +36,7 @@ public class Patient {
     private Gender gender;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "doctor", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "patient", fetch = FetchType.LAZY)
     private User user;
 
     @Transient
