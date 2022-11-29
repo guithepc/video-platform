@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:front/page/home_page.dart';
 import 'package:front/service/appointment_service.dart';
@@ -27,12 +29,12 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                width: 200,
-                height: 200,
-                child: Image.network(
-                    'https://i.pinimg.com/originals/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg'),
-              ),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(50.0),
+                  child: Image.asset(
+                    'assets/images/1.png',
+                    height: 240,
+                  )),
               Container(
                 height: 10,
               ),

@@ -98,10 +98,9 @@ class DoctorAppointmentWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              if (entrie.appointmentDate!.isAfter(DateTime.now()) &&
-                  entrie.appointmentDate!
-                      .add(const Duration(minutes: 30))
-                      .isBefore(DateTime.now()))
+              if (DateTime.now().isAfter(entrie.appointmentDate!) &&
+                  DateTime.now().isBefore(
+                      entrie.appointmentDate!.add(const Duration(minutes: 30))))
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed('/video_call');
