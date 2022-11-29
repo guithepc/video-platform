@@ -58,8 +58,8 @@ class Doctor {
     _data['name'] = name;
     _data['crm'] = crm;
     _data['documentNumber'] = documentNumber;
-    _data['createDate'] = createDate;
-    _data['birthDate'] = birthDate;
+    _data['createDate'] = createDate?.toIso8601String();
+    _data['birthDate'] = birthDate?.toIso8601String();
     _data['speciality'] = speciality?.toJson();
     _data['gender'] = gender?.toJson();
     _data['startAt'] = startAt;

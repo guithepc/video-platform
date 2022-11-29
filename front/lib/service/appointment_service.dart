@@ -83,7 +83,7 @@ class AppointmentService {
 
     var token = await storage.read(key: 'jwt');
     var url = "${environment["baseUrl"]}/medical-appointment";
-    var _body = medicalAppointment.toJson();
+    var _body = jsonEncode(medicalAppointment.toJson());
 
     var response = await http.post(Uri.parse(url),
         headers: {
@@ -91,13 +91,36 @@ class AppointmentService {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: medicalAppointment);
+        body: _body);
 
     if (response.statusCode == 200) {
       var parsed = jsonDecode(utf8.decode(response.bodyBytes));
-      MedicalAppointment appointment = parsed;
+      MedicalAppointment appointment =
+          MedicalAppointment.convertMedicalApointment(parsed);
 
       return appointment;
+    } else {
+      throw Exception('Failed to save medical appointments');
+    }
+  }
+
+  static Future<String> cancelAppointment(int id) async {
+    const storage = FlutterSecureStorage();
+    late MedicalAppointment returnMedicalAppointment;
+
+    var token = await storage.read(key: 'jwt');
+    var url = "${environment["baseUrl"]}/medical-appointment/${id}";
+
+    var response = await http.delete(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+
+    if (response.statusCode == 200) {
+      var parsed = jsonDecode(utf8.decode(response.bodyBytes));
+
+      return "Cancelado com sucesso";
     } else {
       throw Exception('Failed to save medical appointments');
     }

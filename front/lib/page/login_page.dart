@@ -86,12 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                     });
                     var currentUser = await UserService.getCurrentUser();
                     if (loginResponse != null) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(),
-                        ),
-                      );
+                      Navigator.of(context).pushReplacementNamed('/home');
                     }
                   },
                   child: Text('Entrar'))

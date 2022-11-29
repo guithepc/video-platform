@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:front/page/doctor_detail_page.dart';
+import 'package:front/service/appointment_service.dart';
 import 'package:intl/intl.dart';
 
 import '../model/medical_appointment.dart';
@@ -29,8 +30,11 @@ class AppointmentWidget extends StatelessWidget {
               Row(
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
-                    child: Icon(Icons.schedule),
+                    onPressed: () {
+                      AppointmentService.cancelAppointment(entrie.id!);
+                      Navigator.of(context).pushReplacementNamed('/home');
+                    },
+                    child: Icon(Icons.restore_from_trash),
                   ),
                 ],
               ),

@@ -27,6 +27,19 @@ class MedicalAppointment {
       this.appointmentDate,
       this.statusId);
 
+  static convertMedicalApointment(medicalAppointment) {
+    return MedicalAppointment(
+        medicalAppointment['id'],
+        Patient.convertPatient(medicalAppointment['patient']),
+        Doctor.convertDoctor(medicalAppointment['doctor']),
+        Status.convertStatus(medicalAppointment['status']),
+        Speciality.convertSpeciality(medicalAppointment['speciality']),
+        medicalAppointment['observation'],
+        DateTime.parse(medicalAppointment['createDate']),
+        DateTime.parse(medicalAppointment['appointmentDate']),
+        medicalAppointment['statusId']);
+  }
+
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['id'] = id;
@@ -35,8 +48,8 @@ class MedicalAppointment {
     _data['status'] = status?.toJson();
     _data['speciality'] = speciality?.toJson();
     _data['observation'] = observation;
-    _data['createDate'] = createDate;
-    _data['appointmentDate'] = appointmentDate;
+    _data['createDate'] = createDate?.toIso8601String();
+    _data['appointmentDate'] = appointmentDate?.toIso8601String();
     _data['statusId'] = statusId;
     return _data;
   }
