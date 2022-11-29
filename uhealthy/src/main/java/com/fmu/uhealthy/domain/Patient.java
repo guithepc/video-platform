@@ -44,6 +44,6 @@ public class Patient {
 
     @SuppressWarnings("unused")
     public String getProfileImage() {
-        return user.getProfileImage();
+        return user!= null ? user.getProfileImage() : null;
     }
 }
