@@ -39,10 +39,11 @@ public class MedicalAppointmentServiceImpl implements MedicalAppointmentService 
     public List<MedicalAppointment> findAll(){
         var login = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         var user = userRepository.findByLogin(login).orElseThrow(EntityNotFoundException::new);
+        var status = statusRepository.findByCode(SCHEDULED_STATUS).orElseThrow(EntityNotFoundException::new);
         if(user.getPatient() != null)
-            return repository.findAllByPatientId(user.getPatient().getId());
+            return repository.findAllByPatientIdAndStatus_Id(user.getPatient().getId(), status.getId());
         else if(user.getDoctor() !=null)
-            return repository.findAllByDoctorId(user.getDoctor().getId());
+            return repository.findAllByDoctorIdAndStatus_Id(user.getDoctor().getId(), status.getId());
         else
             throw new RuntimeException("Não foi possível carregar as informações do usuário");
     }
