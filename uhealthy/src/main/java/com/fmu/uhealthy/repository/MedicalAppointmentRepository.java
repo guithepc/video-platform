@@ -7,11 +7,8 @@ import java.util.List;
 
 public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppointment, Long> {
 
-    List<MedicalAppointment> findAllByPatientId(Long patientId);
 
-    List<MedicalAppointment> findAllByPatientIdAndStatus_Id(Long patientId, Integer id);
+    List<MedicalAppointment> findAllByPatientIdAndStatus_IdOrderByAppointmentDate(Long patientId, Integer id);
 
-    List<MedicalAppointment> findAllByDoctorId(Long doctorId);
-
-    List<MedicalAppointment> findAllByDoctorIdAndStatus_Id(Long doctorId, Integer id);
+    List<MedicalAppointment> findAllByDoctorIdAndStatus_IdOrderByAppointmentDate(Long doctorId, Integer id);
 }

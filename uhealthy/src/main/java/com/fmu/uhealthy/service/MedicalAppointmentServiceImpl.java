@@ -41,9 +41,9 @@ public class MedicalAppointmentServiceImpl implements MedicalAppointmentService 
         var user = userRepository.findByLogin(login).orElseThrow(EntityNotFoundException::new);
         var status = statusRepository.findByCode(SCHEDULED_STATUS).orElseThrow(EntityNotFoundException::new);
         if(user.getPatient() != null)
-            return repository.findAllByPatientIdAndStatus_Id(user.getPatient().getId(), status.getId());
+            return repository.findAllByPatientIdAndStatus_IdOrderByAppointmentDate(user.getPatient().getId(), status.getId());
         else if(user.getDoctor() !=null)
-            return repository.findAllByDoctorIdAndStatus_Id(user.getDoctor().getId(), status.getId());
+            return repository.findAllByDoctorIdAndStatus_IdOrderByAppointmentDate(user.getDoctor().getId(), status.getId());
         else
             throw new RuntimeException("Não foi possível carregar as informações do usuário");
     }
@@ -75,7 +75,7 @@ public class MedicalAppointmentServiceImpl implements MedicalAppointmentService 
             }
             date = date.plusMinutes(30);
         }
-        var scheduledDates =  repository.findAllByDoctorIdAndStatus_Id(doctorId, status.getId()).stream().map(MedicalAppointment::getAppointmentDate).collect(Collectors.toList());
+        var scheduledDates =  repository.findAllByDoctorIdAndStatus_IdOrderByAppointmentDate(doctorId, status.getId()).stream().map(MedicalAppointment::getAppointmentDate).collect(Collectors.toList());
         scheduledDates.forEach(scheduledDate -> {
             scheduledDate = toZeroSeconds(scheduledDate);
             dates.remove(scheduledDate);
