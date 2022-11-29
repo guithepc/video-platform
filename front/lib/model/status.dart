@@ -8,4 +8,12 @@ class Status {
   static convertStatus(status) {
     return Status(status['id'], status['name'], status['code']);
   }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['name'] = name;
+    _data['code'] = code;
+    return _data;
+  }
 }

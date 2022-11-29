@@ -3,6 +3,7 @@ import 'package:front/page/home_page.dart';
 import 'package:front/service/appointment_service.dart';
 
 import '../service/login_service.dart';
+import '../service/user_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -83,8 +84,14 @@ class _LoginPageState extends State<LoginPage> {
                             );
                           });
                     });
+                    var currentUser = await UserService.getCurrentUser();
                     if (loginResponse != null) {
-                      Navigator.of(context).pushReplacementNamed('/home');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        ),
+                      );
                     }
                   },
                   child: Text('Entrar'))

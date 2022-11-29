@@ -59,12 +59,12 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          appointment.doctor.name ?? "",
+                          appointment.doctor?.name ?? "",
                           style: TextStyle(color: Colors.indigo, fontSize: 20),
                         ),
                         Container(height: 2),
                         Container(height: 5),
-                        Text('CRM/SP.${appointment.doctor.crm ?? ""}'),
+                        Text('CRM/SP.${appointment.doctor?.crm ?? ""}'),
                         Text('Razão Social: CLIN BARUKI SC LTDA'),
                         Container(height: 30),
                         Text('Rua Leoncio De Carvalho, 306')

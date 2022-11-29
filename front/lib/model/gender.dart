@@ -7,4 +7,11 @@ class Gender {
   static convertGender(gender) {
     return Gender(gender['id'], gender['name']);
   }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['name'] = name;
+    return _data;
+  }
 }
