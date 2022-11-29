@@ -118,8 +118,6 @@ class AppointmentService {
     });
 
     if (response.statusCode == 200) {
-      var parsed = jsonDecode(utf8.decode(response.bodyBytes));
-
       return "Cancelado com sucesso";
     } else {
       throw Exception('Failed to save medical appointments');

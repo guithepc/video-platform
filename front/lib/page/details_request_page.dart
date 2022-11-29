@@ -162,18 +162,13 @@ class _DetailsRequestPage extends State<DetailsRequestPage> {
                                     return AlertDialog(
                                       title: Text("Salvo com sucesso"),
                                       content: Text(
-                                          "Agendamento com o Doutor ${doctor?.name} com sucesso para o dia ${new DateFormat("d/MM/y HH:mm").format(selectedDateTime!)}!"),
+                                          "Agendamento com o Doutor ${doctor?.name} efetuado com sucesso para o dia ${new DateFormat("d/MM/y HH:mm").format(selectedDateTime!)}!"),
                                       actions: [
                                         ElevatedButton(
                                           child: Text("Ok"),
                                           onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    HomePage(),
-                                              ),
-                                            );
+                                            Navigator.of(context)
+                                                .pushReplacementNamed('/home');
                                           },
                                         )
                                       ],
