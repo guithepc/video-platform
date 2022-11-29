@@ -62,6 +62,6 @@ public class Doctor {
 
     @SuppressWarnings("unused")
     public String getProfileImage() {
-        return user!= null ? user.getProfileImage() : null;
+        return user!= null ? user.getProfileImage() : "";
     }
 }
