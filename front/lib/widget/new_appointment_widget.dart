@@ -63,7 +63,7 @@ class NewAppointmentWidget extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          RequestAppointmentPage(entrie: entrie),
+                          RequestAppointmentPage(doctor: entrie),
                     ),
                   );
                 },

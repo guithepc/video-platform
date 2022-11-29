@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:front/model/available_date.dart';
 import 'package:front/model/medical_appointment.dart';
 import 'package:front/model/speciality.dart';
 import 'package:http/http.dart' as http;
@@ -47,13 +48,13 @@ class AppointmentService {
     }
   }
 
-  static Future<Map> availableAppointmentDate(int id) async {
+  static Future<List<AvailableDate>> availableAppointmentDate(int id) async {
     const storage = FlutterSecureStorage();
-    Map mapAppointmentDate = {};
+    List<AvailableDate> listAvailableAppointment = [];
 
     var token = await storage.read(key: 'jwt');
     var url =
-        "${environment["baseUrl"]}/medical-appointment/available-appointment-list-date?doctorId=$id";
+        "${environment["baseUrl"]}/medical-appointment/available-appointment-date?doctorId=$id";
 
     var response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
@@ -63,11 +64,42 @@ class AppointmentService {
 
     if (response.statusCode == 200) {
       var parsed = jsonDecode(utf8.decode(response.bodyBytes));
-      List<dynamic> doctors = parsed;
+      List<dynamic> dates = parsed;
 
-      return mapAppointmentDate;
+      for (var date in dates) {
+        listAvailableAppointment.add(AvailableDate.convertAvailableDate(date));
+      }
+
+      return listAvailableAppointment;
     } else {
       throw Exception('Failed to get medical appointments');
+    }
+  }
+
+  static Future<MedicalAppointment> saveMedicalAppointment(
+      MedicalAppointment medicalAppointment) async {
+    const storage = FlutterSecureStorage();
+    late MedicalAppointment returnMedicalAppointment;
+
+    var token = await storage.read(key: 'jwt');
+    var url = "${environment["baseUrl"]}/medical-appointment";
+    var _body = medicalAppointment.toJson();
+
+    var response = await http.post(Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: medicalAppointment);
+
+    if (response.statusCode == 200) {
+      var parsed = jsonDecode(utf8.decode(response.bodyBytes));
+      MedicalAppointment appointment = parsed;
+
+      return appointment;
+    } else {
+      throw Exception('Failed to save medical appointments');
     }
   }
 }

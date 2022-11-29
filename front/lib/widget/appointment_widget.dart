@@ -23,7 +23,7 @@ class AppointmentWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                new DateFormat("d/MM/y H:m").format(entrie.appointmentDate),
+                new DateFormat("d/MM/y HH:mm").format(entrie.appointmentDate!),
                 style: TextStyle(fontSize: 20),
               ),
               Row(
@@ -49,14 +49,14 @@ class AppointmentWidget extends StatelessWidget {
               ),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(
-                  entrie.doctor.name ?? "",
+                  entrie.doctor?.name ?? "",
                   style: TextStyle(color: Colors.blue, fontSize: 18),
                 ),
                 Container(
                   height: 10,
                 ),
                 Text(
-                  entrie.doctor.speciality?.name ?? "",
+                  entrie.doctor?.speciality?.name ?? "",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 15,

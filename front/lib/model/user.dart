@@ -5,8 +5,8 @@ import 'doctor.dart';
 class User {
   final int id;
   final String login;
-  final Patient patient;
-  final Doctor doctor;
+  final Patient? patient;
+  final Doctor? doctor;
 
   User(this.id, this.login, this.patient, this.doctor);
 
