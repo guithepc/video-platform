@@ -32,8 +32,8 @@ class Patient {
     _data['id'] = id;
     _data['name'] = name;
     _data['documentNumber'] = documentNumber;
-    _data['createDate'] = createDate;
-    _data['birthDate'] = birthDate;
+    _data['createDate'] = createDate?.toIso8601String();
+    _data['birthDate'] = birthDate?.toIso8601String();
     _data['gender'] = gender?.toJson();
     _data['profileImage'] = profileImage;
     return _data;

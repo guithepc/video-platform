@@ -38,7 +38,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
               ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 SizedBox(
-                  width: 170,
+                  width: 300,
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {},
@@ -47,19 +47,6 @@ class _AppointmentPageState extends State<AppointmentPage> {
                     ),
                   ),
                 ),
-                Container(
-                  width: 10,
-                ),
-                SizedBox(
-                  width: 170,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Nome do Profissional',
-                    ),
-                  ),
-                )
               ]),
               Container(height: 10),
               /*Row(

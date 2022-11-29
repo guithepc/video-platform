@@ -68,7 +68,7 @@ class _RequestAppointmentPageState extends State<RequestAppointmentPage> {
                           ),
                           Container(height: 20),
                           const Text(
-                              'A clínica pode entrar em contato par asugerir outros horários ou passar orientações.')
+                              'A clínica pode entrar em contato para sugerir outros horários ou passar orientações.')
                         ],
                       ),
                     ),

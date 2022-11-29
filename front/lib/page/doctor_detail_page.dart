@@ -65,9 +65,9 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                         Container(height: 2),
                         Container(height: 5),
                         Text('CRM/SP.${appointment.doctor?.crm ?? ""}'),
-                        Text('Razão Social: CLIN BARUKI SC LTDA'),
+                        Text('Clínica: ${appointment.doctor?.clinic?.name}'),
                         Container(height: 30),
-                        Text('Rua Leoncio De Carvalho, 306')
+                        Text('${appointment.doctor?.clinic?.address}')
                       ],
                     )
                   ],

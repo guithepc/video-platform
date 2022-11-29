@@ -4,6 +4,7 @@ import 'package:front/model/medical_appointment.dart';
 import 'package:front/model/speciality.dart';
 import 'package:front/model/status.dart';
 import 'package:front/model/user.dart';
+import 'package:front/page/home_page.dart';
 import 'package:intl/intl.dart';
 import '../model/doctor.dart';
 import '../service/appointment_service.dart';
@@ -47,7 +48,7 @@ class _DetailsRequestPage extends State<DetailsRequestPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Confira os dados antes de enviar',
                       style: TextStyle(fontSize: 18),
                     ),
@@ -139,21 +140,41 @@ class _DetailsRequestPage extends State<DetailsRequestPage> {
                       width: double.infinity,
                       height: 40,
                       child: ElevatedButton(
-                          onPressed: () {
-                            var status = Status(1, 'Agendado', 'shceduled');
+                          onPressed: () async {
                             var observation = "Observation";
                             var medicalAppointment = MedicalAppointment(
                                 null,
                                 user?.patient,
                                 doctor,
-                                status,
+                                null,
                                 doctor?.speciality,
                                 observation,
                                 DateTime.now(),
                                 selectedDateTime,
                                 1);
-                            AppointmentService.saveMedicalAppointment(
-                                medicalAppointment);
+                            MedicalAppointment resultAppointment =
+                                await AppointmentService.saveMedicalAppointment(
+                                    medicalAppointment);
+                            if (resultAppointment != null) {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text("Salvo com sucesso"),
+                                      content: Text(
+                                          "Agendamento com o Doutor ${doctor?.name} efetuado com sucesso para o dia ${new DateFormat("d/MM/y HH:mm").format(selectedDateTime!)}!"),
+                                      actions: [
+                                        ElevatedButton(
+                                          child: Text("Ok"),
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .pushReplacementNamed('/home');
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  });
+                            }
                           },
                           child: Text('SOLICITAR CONSULTA')),
                     )

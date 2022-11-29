@@ -24,7 +24,6 @@ class LoginService {
     if (response.statusCode == 200) {
       var token = response.body;
       await storage.write(key: 'jwt', value: token);
-      await storage.read(key: 'jwt');
       return response;
     } else {
       throw Exception('Failed to login');

@@ -10,8 +10,8 @@ import '../model/medical_appointment.dart';
 
 import 'package:intl/date_symbol_data_local.dart';
 
-class AppointmentWidget extends StatelessWidget {
-  const AppointmentWidget({required this.entrie});
+class DoctorAppointmentWidget extends StatelessWidget {
+  const DoctorAppointmentWidget({required this.entrie});
   final MedicalAppointment entrie;
 
   @override
@@ -98,29 +98,18 @@ class AppointmentWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/video_call');
-                },
-                child: Text('ACESSAR CONSULTA'),
-              ),
-              Container(
-                width: 20,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          DoctorDetailPage(appointment: entrie),
-                    ),
-                  );
-                },
-                child: Text(
-                  'VER DETALHES',
-                ),
-              ),
+              if (entrie.appointmentDate!.isAfter(DateTime.now()) &&
+                  entrie.appointmentDate!
+                      .add(const Duration(minutes: 30))
+                      .isBefore(DateTime.now()))
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/video_call');
+                  },
+                  child: Text('ACESSAR CONSULTA'),
+                )
+              else
+                Container(),
             ],
           )
         ],

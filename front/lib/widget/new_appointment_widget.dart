@@ -72,12 +72,6 @@ class NewAppointmentWidget extends StatelessWidget {
               Container(
                 width: 20,
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Text(
-                  'VER DETALHES',
-                ),
-              ),
             ],
           )
         ],

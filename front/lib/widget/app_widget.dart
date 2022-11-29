@@ -23,6 +23,7 @@ class AppWidget extends StatelessWidget {
             initialRoute: '/',
             routes: {
               '/': (context) => LoginPage(),
+              '/home': (context) => HomePage(),
               '/appointment': (context) => AppointmentPage(),
               '/video_call': (context) => VideoPage()
             },
