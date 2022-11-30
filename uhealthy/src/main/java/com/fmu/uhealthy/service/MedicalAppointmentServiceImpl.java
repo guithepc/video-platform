@@ -27,6 +27,7 @@ public class MedicalAppointmentServiceImpl implements MedicalAppointmentService 
     private final DoctorRepository doctorRepository;
     private final String SCHEDULED_STATUS = "scheduled";
     private final String CANCELED_STATUS = "canceled";
+    private final String FINISHED_STATUS = "finished";
 
     public MedicalAppointmentServiceImpl(MedicalAppointmentRepository repository, UserRepository userRepository, StatusRepository statusRepository, DoctorRepository doctorRepository) {
         this.repository = repository;
@@ -39,11 +40,10 @@ public class MedicalAppointmentServiceImpl implements MedicalAppointmentService 
     public List<MedicalAppointment> findAll(){
         var login = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         var user = userRepository.findByLogin(login).orElseThrow(EntityNotFoundException::new);
-        var status = statusRepository.findByCode(SCHEDULED_STATUS).orElseThrow(EntityNotFoundException::new);
         if(user.getPatient() != null)
-            return repository.findAllByPatientIdAndStatus_IdOrderByAppointmentDate(user.getPatient().getId(), status.getId());
+            return repository.findAllByPatientIdOrderByAppointmentDate(user.getPatient().getId());
         else if(user.getDoctor() !=null)
-            return repository.findAllByDoctorIdAndStatus_IdOrderByAppointmentDate(user.getDoctor().getId(), status.getId());
+            return repository.findAllByDoctorIdOrderByAppointmentDate(user.getDoctor().getId());
         else
             throw new RuntimeException("Não foi possível carregar as informações do usuário");
     }
@@ -96,6 +96,14 @@ public class MedicalAppointmentServiceImpl implements MedicalAppointmentService 
     public void cancelAppointment(Long appointmentId){
         var appointment = repository.getById(appointmentId);
         var status = statusRepository.findByCode(CANCELED_STATUS).orElseThrow(EntityNotFoundException::new);
+        appointment.setStatus(status);
+        repository.save(appointment);
+    }
+
+    @Override
+    public void finishAppointment(Long id){
+        var appointment = repository.getById(id);
+        var status = statusRepository.findByCode(FINISHED_STATUS).orElseThrow(EntityNotFoundException::new);
         appointment.setStatus(status);
         repository.save(appointment);
     }

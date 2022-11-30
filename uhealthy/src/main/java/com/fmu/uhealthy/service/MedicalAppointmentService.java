@@ -18,4 +18,6 @@ public interface MedicalAppointmentService {
 
     void cancelAppointment(Long appointmentId);
 
+    void finishAppointment(Long id);
+
 }

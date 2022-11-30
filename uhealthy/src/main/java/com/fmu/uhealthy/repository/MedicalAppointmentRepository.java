@@ -10,5 +10,9 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
 
     List<MedicalAppointment> findAllByPatientIdAndStatus_IdOrderByAppointmentDate(Long patientId, Integer id);
 
+    List<MedicalAppointment> findAllByPatientIdOrderByAppointmentDate(Long patientId);
+
     List<MedicalAppointment> findAllByDoctorIdAndStatus_IdOrderByAppointmentDate(Long doctorId, Integer id);
+
+    List<MedicalAppointment> findAllByDoctorIdOrderByAppointmentDate(Long doctorId);
 }
