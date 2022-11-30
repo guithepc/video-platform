@@ -89,11 +89,10 @@ class DoctorAppointmentWidget extends StatelessWidget {
             ],
           ),
           Container(
-            height: 10,
-          ),
-          Row(children: [Flexible(child: Text(entrie.observation ?? "-"))]),
-          Container(
             height: 20,
+          ),
+          Column(
+            children: [],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

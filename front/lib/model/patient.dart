@@ -8,9 +8,11 @@ class Patient {
   final DateTime? birthDate;
   final Gender? gender;
   final String? profileImage;
+  final String? phone;
+  final String? email;
 
   Patient(this.id, this.name, this.documentNumber, this.createDate,
-      this.birthDate, this.gender, this.profileImage);
+      this.birthDate, this.gender, this.profileImage, this.phone, this.email);
 
   static convertPatient(patient) {
     if (patient != null) {
@@ -21,9 +23,11 @@ class Patient {
           DateTime.parse(patient['createDate']),
           DateTime.parse(patient['birthDate']),
           Gender.convertGender(patient['gender']),
-          patient['profileImage']);
+          patient['profileImage'],
+          patient['phone'],
+          patient['email']);
     } else {
-      return Patient(null, null, null, null, null, null, null);
+      return Patient(null, null, null, null, null, null, null, null, null);
     }
   }
 
@@ -36,6 +40,8 @@ class Patient {
     _data['birthDate'] = birthDate?.toIso8601String();
     _data['gender'] = gender?.toJson();
     _data['profileImage'] = profileImage;
+    _data['phone'] = phone;
+    _data['email'] = email;
     return _data;
   }
 }

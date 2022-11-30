@@ -89,10 +89,6 @@ class AppointmentWidget extends StatelessWidget {
             ],
           ),
           Container(
-            height: 10,
-          ),
-          Row(children: [Flexible(child: Text(entrie.observation ?? "-"))]),
-          Container(
             height: 20,
           ),
           Row(
