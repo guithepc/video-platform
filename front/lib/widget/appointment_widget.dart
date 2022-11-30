@@ -31,6 +31,7 @@ class AppointmentWidget extends StatelessWidget {
               ),
               Row(
                 children: [
+                  if(entrie.status?.name != "Cancelado")
                   ElevatedButton(
                     onPressed: () {
                       AppointmentService.cancelAppointment(entrie.id!);
@@ -71,6 +72,9 @@ class AppointmentWidget extends StatelessWidget {
                 width: 5,
               ),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Container(
+                  height: 15,
+                ),
                 Text(
                   entrie.doctor?.name ?? "",
                   style: TextStyle(color: Colors.blue, fontSize: 18),
@@ -84,6 +88,15 @@ class AppointmentWidget extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 15,
                       fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  height: 10,
+                ),
+                Text(
+                  entrie.status?.name != null? "Status: ${entrie.status?.name}" : "",
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 15),
                 )
               ])
             ],

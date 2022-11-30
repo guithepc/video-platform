@@ -8,7 +8,7 @@ import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 
 const appId = "cf96c1d0fddf475a8d0e19c8257f6c12";
 const token =
-    "007eJxTYMjRievLzLyoeCdgkpz/rKOuInfnO7/2+TPHWKBOhu0Cj6MCQ3KapVmyYYpBWkpKmom5aaJFikGqoWWyhZGpeRpQwmi/el1yQyAjg0OhLyMjAwSC+FwMZZkpqfnxyRmJJQwMAIIhH7M=";
+    "007eJxTYFi2I/Lid8UL/yZxH32xnq1sicW2NRcN53KGVJnkfzV4cShfgSE5zdIs2TDFIC0lJc3E3DTRIsUg1dAy2cLI1DwNKGEUv6YtuSGQkWGmnT0rIwMEgvhcDGWZKan58ckZiSUMDADbgyO7";
 
 class VideoPage extends StatefulWidget {
   @override
