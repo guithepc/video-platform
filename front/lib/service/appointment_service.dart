@@ -129,16 +129,16 @@ class AppointmentService {
     late MedicalAppointment returnMedicalAppointment;
 
     var token = await storage.read(key: 'jwt');
-    var url = "${environment["baseUrl"]}/finish";
+    var url = "${environment["baseUrl"]}/medical-appointment/$id/finish";
 
-    var response = await http.delete(Uri.parse(url), headers: {
+    var response = await http.put(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     });
 
     if (response.statusCode == 200) {
-      return "Cancelado com sucesso";
+      return "Finalizado com sucesso";
     } else {
       throw Exception('Failed to save medical appointments');
     }

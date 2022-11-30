@@ -132,7 +132,7 @@ class _VideoPageState extends State<VideoPage> {
                 _engine.leaveChannel();
                 _engine.destroy();
                 AppointmentService.finish(id!);
-                Navigator.pop(context);
+                Navigator.of(context).pushReplacementNamed('/home');
               },
               child: const Icon(
                 Icons.call_end,
