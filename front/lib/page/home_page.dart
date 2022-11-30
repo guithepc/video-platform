@@ -58,18 +58,6 @@ class HomePageState extends State<HomePage> {
                         style: TextStyle(fontSize: 25),
                       ),
                     ),
-
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      alignment: Alignment.bottomLeft,
-                      child: showAppointments ? const Text(
-                        'Suas consultas:',
-                        style: TextStyle(fontSize: 20),
-                      ) : const Text(
-                        'Você não tem consultas marcadas. Aproveite e marque sua primeira consulta agora.',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
                     FutureBuilder<List<MedicalAppointment>>(
                       builder: (BuildContext context,
                           AsyncSnapshot<List<MedicalAppointment>> snapshot) {
