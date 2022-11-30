@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:front/page/doctor_detail_page.dart';
+import 'package:front/page/video_page.dart';
 import 'package:front/service/appointment_service.dart';
 import 'package:intl/intl.dart';
 
@@ -99,7 +100,12 @@ class AppointmentWidget extends StatelessWidget {
                       entrie.appointmentDate!.add(const Duration(minutes: 30))))
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/video_call');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VideoPage(id: entrie?.id),
+                      ),
+                    );
                   },
                   child: Text('ACESSAR CONSULTA'),
                 )

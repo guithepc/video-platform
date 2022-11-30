@@ -19,7 +19,6 @@ class NetworkPage extends StatefulWidget {
 
 class _NetworkPageState extends State<NetworkPage> {
   final Speciality speciality;
-
   _NetworkPageState(this.speciality);
 
   @override

@@ -1,21 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:front/service/appointment_service.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 
-const appId = "cf96c1d0fddf475a8d0e19c8257f6c12";
+const appId = "a847cfd7b1f84e358a1f7278214b9cb6";
 const token =
-    "007eJxTYMjRievLzLyoeCdgkpz/rKOuInfnO7/2+TPHWKBOhu0Cj6MCQ3KapVmyYYpBWkpKmom5aaJFikGqoWWyhZGpeRpQwmi/el1yQyAjg0OhLyMjAwSC+FwMZZkpqfnxyRmJJQwMAIIhH7M=";
+    "007eJxTYFi2I/Lid8UL/yZxH32xnq1sicW2NRcN53KGVJnkfzV4cShfgSE5zdIs2TDFIC0lJc3E3DTRIsUg1dAy2cLI1DwNKGEUv6YtuSGQkWGmnT0rIwMEgvhcDGWZKan58ckZiSUMDADbgyO7";
 
 class VideoPage extends StatefulWidget {
+  const VideoPage({required this.id});
+  final int? id;
   @override
-  State<StatefulWidget> createState() => _VideoPageState();
+  State<StatefulWidget> createState() => _VideoPageState(id);
 }
 
 class _VideoPageState extends State<VideoPage> {
+  final int? id;
+  _VideoPageState(this.id);
+
   int _remoteUid = 0;
   late RtcEngine _engine;
   var muted = false;
@@ -25,13 +31,6 @@ class _VideoPageState extends State<VideoPage> {
     super.initState();
     initForAgora();
   }
-
-  /*@override
-  void dispose() {
-    _engine.leaveChannel();
-    _engine.destroy();
-    super.dispose();
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +131,7 @@ class _VideoPageState extends State<VideoPage> {
               onPressed: () {
                 _engine.leaveChannel();
                 _engine.destroy();
+                AppointmentService.finish(id!);
                 Navigator.pop(context);
               },
               child: const Icon(

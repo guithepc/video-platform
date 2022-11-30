@@ -123,4 +123,24 @@ class AppointmentService {
       throw Exception('Failed to save medical appointments');
     }
   }
+
+  static Future<String> finish(int id) async {
+    const storage = FlutterSecureStorage();
+    late MedicalAppointment returnMedicalAppointment;
+
+    var token = await storage.read(key: 'jwt');
+    var url = "${environment["baseUrl"]}/finish";
+
+    var response = await http.delete(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+
+    if (response.statusCode == 200) {
+      return "Cancelado com sucesso";
+    } else {
+      throw Exception('Failed to save medical appointments');
+    }
+  }
 }
