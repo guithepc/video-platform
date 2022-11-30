@@ -42,8 +42,24 @@ public class Patient {
     @Transient
     private String profileImage;
 
+    @Transient
+    private String email;
+
+    @Transient
+    private String phone;
+
     @SuppressWarnings("unused")
     public String getProfileImage() {
         return user!= null ? user.getProfileImage() : "";
+    }
+
+    @SuppressWarnings("unused")
+    public String getEmail() {
+        return user!= null ? user.getLogin() : "";
+    }
+
+    @SuppressWarnings("unused")
+    public String getPhone() {
+        return user!= null ? user.getPhone() : "";
     }
 }
