@@ -30,6 +30,10 @@ public class User {
     @Column(name = "profile_image")
     private String profileImage;
 
+    @JsonIgnore
+    @Column(name = "phone")
+    private String phone;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "patient_id")
     private Patient patient;
