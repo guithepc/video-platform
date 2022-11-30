@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   late List<MedicalAppointment> entries = <MedicalAppointment>[];
+  bool showAppointments = true;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +27,12 @@ class HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
               Text('Suas consultas'),
-              /*Container(
+              Container(
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/');
+                        Navigator.of(context).pushReplacementNamed('/');
                       },
-                      child: Icon(Icons.logout)))*/
+                      child: Icon(Icons.logout)))
             ])),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
@@ -57,11 +58,15 @@ class HomePageState extends State<HomePage> {
                         style: TextStyle(fontSize: 25),
                       ),
                     ),
+
                     Container(
                       padding: const EdgeInsets.all(20),
                       alignment: Alignment.bottomLeft,
-                      child: const Text(
+                      child: showAppointments ? const Text(
                         'Suas consultas:',
+                        style: TextStyle(fontSize: 20),
+                      ) : const Text(
+                        'Você não tem consultas marcadas. Aproveite e marque sua primeira consulta agora.',
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
@@ -72,6 +77,7 @@ class HomePageState extends State<HomePage> {
                           return Container();
                         } else {
                           entries = snapshot.data!;
+                          showAppointments = false;
                           return Expanded(
                               child: ListView.builder(
                                   itemCount: entries.length,

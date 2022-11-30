@@ -41,6 +41,12 @@ public class MedicalAppointmentController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/{id}/finish")
+    public ResponseEntity<Void> finishAppointment(@PathVariable("id") Long id){
+        service.finishAppointment(id);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> cancelAppointment(@PathVariable("id") Long appointmentId){
         service.cancelAppointment(appointmentId);

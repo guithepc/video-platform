@@ -142,7 +142,8 @@ class _RequestAppointmentPageState extends State<RequestAppointmentPage> {
                           );
                           if (pickedDate != null) {
                             setState(() {
-                              controller.text = pickedDate.toString();
+                              controller.text = DateFormat("dd/MM/yyyy HH:mm")
+                                  .format(pickedDate);
                               snapshot.data?.forEach((date) {
                                 if (date.date == pickedDate) {
                                   selectableHours = date.hours;

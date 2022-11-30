@@ -31,6 +31,7 @@ class DoctorAppointmentWidget extends StatelessWidget {
               ),
               Row(
                 children: [
+                  if(entrie.status?.name != "Cancelado")
                   ElevatedButton(
                     onPressed: () {
                       AppointmentService.cancelAppointment(entrie.id!);
@@ -64,27 +65,39 @@ class DoctorAppointmentWidget extends StatelessWidget {
               ClipRRect(
                   borderRadius: BorderRadius.circular(50.0),
                   child: Image.memory(
-                    base64Decode(entrie.doctor?.profileImage ?? ""),
+                    base64Decode(entrie.patient?.profileImage ?? ""),
                     height: 60,
                   )),
               Container(
                 width: 5,
               ),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(
-                  entrie.doctor?.name ?? "",
-                  style: TextStyle(color: Colors.blue, fontSize: 18),
-                ),
                 Container(
                   height: 10,
                 ),
                 Text(
-                  entrie.doctor?.speciality?.name ?? "",
-                  style: TextStyle(
+                  entrie.patient?.name ?? "",
+                  style: const TextStyle(color: Colors.blue, fontSize: 18),
+                ),
+                Text(
+                  entrie.patient?.email ?? "",
+                  style: const TextStyle(
                       color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                )
+                      fontSize: 15),
+                ),
+                Text(
+                  entrie.patient?.phone != null?
+                  "(${entrie.patient?.phone?.substring(0, 2)}) ${entrie.patient?.phone?.substring(2, 7)}-${entrie.patient?.phone?.substring(7, 11)}" : "",
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 15),
+                ),
+                Text(
+                  entrie.status?.name != null? "Status: ${entrie.status?.name}" : "",
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 15),
+                ),
               ])
             ],
           ),

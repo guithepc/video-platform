@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:front/page/request_appointment_page.dart';
@@ -22,8 +24,8 @@ class NewAppointmentWidget extends StatelessWidget {
             children: [
               ClipRRect(
                   borderRadius: BorderRadius.circular(50.0),
-                  child: Image.asset(
-                    'assets/images/medico.png',
+                  child: Image.memory(
+                    base64Decode(entrie.profileImage ?? ""),
                     height: 60,
                   )),
               Container(
