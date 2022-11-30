@@ -26,12 +26,12 @@ class HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
               Text('Suas consultas'),
-              Container(
+              /*Container(
                   child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pushNamed('/');
                       },
-                      child: Icon(Icons.logout)))
+                      child: Icon(Icons.logout)))*/
             ])),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
